@@ -1,21 +1,10 @@
-# Aoc2024
+# Advent of Code 2024 - Elixir
+Solutions for AOC 2024.
 
-**TODO: Add description**
+This was a **learning** project. I am a Data Scientist and ML Engineer who used these exercises to learn:
+ - Functional and immutable programming
+ - Elixir language https://elixir-lang.org
+ - Neovim editor https://neovim.io
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `aoc2024` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:aoc2024, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/aoc2024>.
+The solutions are probabbly not optimal but manage to get the work done. Many are inspired from other people's solutions and thus are not original.
 
