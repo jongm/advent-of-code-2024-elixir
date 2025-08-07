@@ -1,9 +1,0 @@
-{application,aoc2024,
-             [{modules,['Elixir.AOC.Elixir01','Elixir.AOC.Elixir02',
-                        'Elixir.AOC.Elixir03','Elixir.AOC.Elixir04',
-                        'Elixir.AOC.Elixir05']},
-              {optional_applications,[]},
-              {applications,[kernel,stdlib,elixir,logger]},
-              {description,"aoc2024"},
-              {registered,[]},
-              {vsn,"0.1.0"}]}.

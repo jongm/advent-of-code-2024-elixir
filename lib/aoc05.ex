@@ -40,30 +40,10 @@ defmodule AOC.Elixir05 do
   end
 
   def valid_update?([first | rest], afters) do
-    # Enum.empty?(rest) or
-    #   (rest
-    #    |> Enum.map(&goes_after?(&1, first, afters))
-    #    |> Enum.all?() and valid_update?(rest, afters))
-
-    is_empty = Enum.empty?(rest)
-
-    is_valid =
-      rest
-      |> Enum.map(&goes_after?(first, &1, afters))
-      |> Enum.all?()
-
-    next_valid =
-      if is_empty do
-        true
-      else
-        valid_update?(rest, afters)
-      end
-
-    # IO.puts("First: #{first}\nRest: ")
-    # IO.inspect(rest, charlists: :as_lists)
-    # IO.puts("\nEmpty: #{is_empty}, Valid: #{is_valid}, Next: #{next_valid}\n")
-
-    is_empty or (is_valid and next_valid)
+    Enum.empty?(rest) or
+      (rest
+       |> Enum.map(&goes_after?(first, &1, afters))
+       |> Enum.all?() and valid_update?(rest, afters))
   end
 
   def part1(updates, afters) do
@@ -72,20 +52,31 @@ defmodule AOC.Elixir05 do
     |> Enum.map(fn list -> Enum.at(list, div(length(list), 2)) end)
     |> Enum.sum()
   end
+
+  def part2(updates, afters) do
+    updates
+    |> Enum.reject(&valid_update?(&1, afters))
+    |> Enum.map(fn list -> Enum.sort(list, &goes_after?(&1, &2, afters)) end)
+    |> Enum.map(fn list -> Enum.at(list, div(length(list), 2)) end)
+    |> Enum.sum()
+  end
 end
 
 # Solutions
 {orders, updates} = AOC.Elixir05.parse_input()
 afters = AOC.Elixir05.get_afters(orders)
+
 AOC.Elixir05.part1(updates, afters)
 
-Enum.at(updates, 1)
-|> then(fn list -> Enum.at(list, div(length(list), 2)) end)
+AOC.Elixir05.part2(updates, afters)
 
 # AOC.Elixir05.valid_update?(
 #   [92, 88, 34, 85, 87, 26, 29, 94, 93, 75, 12, 84, 13, 22, 76, 24, 53, 27, 91, 41, 39, 47, 25],
 #   afters
 # )
+#
+# Enum.at(updates, 1)
+# |> then(fn list -> Enum.at(list, div(length(list), 2)) end)
 #
 # orders
 # |> Enum.filter(fn [l, r] -> l == 92 end)
