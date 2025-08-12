@@ -1,8 +1,6 @@
 defmodule AOC.Elixir02 do
-  @input_path "inputs/input02.txt"
-
-  def parse_input do
-    File.read!(@input_path)
+  def parse_input(raw) do
+    raw
     |> String.split("\n", trim: true)
     |> Enum.map(fn row ->
       String.split(row, " ")
@@ -68,10 +66,10 @@ defmodule AOC.Elixir02 do
   end
 end
 
-# Solutions
-input = AOC.Elixir02.parse_input()
-AOC.Elixir02.part1(input)
-AOC.Elixir02.part2(input, 1)
+# # Solutions
+# input = File.read!("inputs/input02.txt") |> AOC.Elixir02.parse_input()
+# AOC.Elixir02.part1(input)
+# AOC.Elixir02.part2(input, 1)
 
 # # Testing
 # row = [2, 5, 3, 7, 8]

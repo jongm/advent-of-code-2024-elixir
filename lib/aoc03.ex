@@ -1,10 +1,4 @@
 defmodule AOC.Elixir03 do
-  @input_path "inputs/input03.txt"
-
-  def parse_input do
-    File.read!(@input_path)
-  end
-
   def do_operation(op) do
     [n1] = Regex.run(~r"[0-9]+(?=\))", op)
     [n2] = Regex.run(~r"(?<=\()[0-9]+", op)
@@ -31,11 +25,11 @@ defmodule AOC.Elixir03 do
   end
 end
 
-# Solutions
-input = AOC.Elixir03.parse_input()
-AOC.Elixir03.calc_segment(input)
-AOC.Elixir03.part2(input)
-
-# Testing 
-AOC.Elixir03.do_operation("(12, 10)")
-AOC.Elixir03.do_first_half(input)
+# # Solutions
+# input = File.read!("inputs/input03.txt")
+# AOC.Elixir03.calc_segment(input)
+# AOC.Elixir03.part2(input)
+#
+# # Testing 
+# AOC.Elixir03.do_operation("(12, 10)")
+# AOC.Elixir03.do_first_half(input)

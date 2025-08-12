@@ -1,9 +1,7 @@
 defmodule AOC.Elixir05 do
-  @input_path "inputs/input05.txt"
-
-  def parse_input do
+  def parse_input(raw) do
     [orders, updates] =
-      File.read!(@input_path)
+      raw
       |> String.split("\n\n", trim: true)
 
     orders =
@@ -62,13 +60,13 @@ defmodule AOC.Elixir05 do
   end
 end
 
-# Solutions
-{orders, updates} = AOC.Elixir05.parse_input()
-afters = AOC.Elixir05.get_afters(orders)
-
-AOC.Elixir05.part1(updates, afters)
-
-AOC.Elixir05.part2(updates, afters)
+# # Solutions
+# {orders, updates} = File.read!("inputs/input05.txt") |> AOC.Elixir05.parse_input()
+# afters = AOC.Elixir05.get_afters(orders)
+#
+# AOC.Elixir05.part1(updates, afters)
+#
+# AOC.Elixir05.part2(updates, afters)
 
 # AOC.Elixir05.valid_update?(
 #   [92, 88, 34, 85, 87, 26, 29, 94, 93, 75, 12, 84, 13, 22, 76, 24, 53, 27, 91, 41, 39, 47, 25],

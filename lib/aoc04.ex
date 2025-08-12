@@ -1,9 +1,6 @@
 defmodule AOC.Elixir04 do
-  @input_path "inputs/input04.txt"
-  @size 140
-
-  def parse_input do
-    File.read!(@input_path)
+  def parse_input(raw) do
+    raw
     |> String.split("\n", trim: true)
     |> Enum.map(&String.to_charlist/1)
   end
@@ -19,13 +16,15 @@ defmodule AOC.Elixir04 do
     |> Enum.map(&Tuple.to_list/1)
   end
 
-  def in_bounds({row, col}) do
-    row < @size and col < @size
+  def in_bounds({row, col}, size) do
+    row < size and col < size
   end
 
   def take_diagonal(input, start_row, start_col) do
+    size = length(input)
+
     Stream.iterate({start_row, start_col}, fn {r, c} -> {r + 1, c + 1} end)
-    |> Enum.take_while(&in_bounds/1)
+    |> Enum.take_while(&in_bounds(&1, size))
     |> Enum.map(fn {r, c} ->
       input
       |> Enum.at(r)
@@ -34,7 +33,9 @@ defmodule AOC.Elixir04 do
   end
 
   def all_diagonals(input) do
-    Enum.map(0..(@size - 1), &[{&1, 0}, {0, &1}])
+    size = length(input)
+
+    Enum.map(0..(size - 1), &[{&1, 0}, {0, &1}])
     |> Enum.concat()
     |> Enum.uniq()
     |> Enum.map(fn {r, c} -> take_diagonal(input, r, c) end)
@@ -75,9 +76,11 @@ defmodule AOC.Elixir04 do
   end
 
   def part2(input) do
+    size = length(input)
+
     all_points =
-      1..(@size - 2)
-      |> Enum.map(fn n -> Enum.map(1..(@size - 2), &{&1, n}) end)
+      1..(size - 2)
+      |> Enum.map(fn n -> Enum.map(1..(size - 2), &{&1, n}) end)
       |> Enum.concat()
 
     all_points
@@ -88,14 +91,14 @@ defmodule AOC.Elixir04 do
   end
 end
 
-# Solutions
-input = AOC.Elixir04.parse_input()
-AOC.Elixir04.part1(input)
-AOC.Elixir04.part2(input)
+# # Solutions
+# input = File.read!("inputs/input04.txt") |> AOC.Elixir04.parse_input()
+# AOC.Elixir04.part1(input)
+# AOC.Elixir04.part2(input)
 
 # # Testing
-AOC.Elixir04.is_letter_a?({0, 1}, input)
-AOC.Elixir04.valid_corners?({5, 5}, input)
+# AOC.Elixir04.is_letter_a?({0, 1}, input)
+# AOC.Elixir04.valid_corners?({5, 5}, input)
 # AOC.Elixir04.take_diagonal(input, 120, 0)
 #
 # AOC.Elixir04.all_diagonals(input)

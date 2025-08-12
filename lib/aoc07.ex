@@ -1,6 +1,4 @@
 defmodule AOC.Elixir07 do
-  @input_path "inputs/input07.txt"
-
   def parse_row(row) do
     [target, nums] = String.split(row, ": ", trim: true)
     target = String.to_integer(target)
@@ -13,8 +11,8 @@ defmodule AOC.Elixir07 do
     {target, nums}
   end
 
-  def parse_input do
-    File.read!(@input_path)
+  def parse_input(raw) do
+    raw
     |> String.split("\n", trim: true)
     |> Enum.map(&parse_row/1)
   end
@@ -64,12 +62,12 @@ defmodule AOC.Elixir07 do
 end
 
 # # Solutions
-# input = AOC.Elixir07.parse_input()
+# input = File.read!("inputs/input07.txt") |> AOC.Elixir07.parse_input()
 # AOC.Elixir07.parts(input, [:sum, :mul])
 # AOC.Elixir07.parts(input, [:sum, :mul, :con])
-
+#
 # # Testing
-# raw = "
+# check = "
 # 190: 10 19
 # 3267: 81 40 27
 # 83: 17 5
@@ -78,16 +76,10 @@ end
 # 161011: 16 10 13
 # 192: 17 8 14
 # 21037: 9 7 18 13
-# 292: 11 6 16 20
-# "
-# (
-# test_input =
-#   String.split(raw, "\n", trim: true)
-#   |> Enum.map(&AOC.Elixir07.parse_row/1)
-# )
+# 292: 11 6 16 20" |> AOC.Elixir07.parse_input()
 #
-# AOC.Elixir07.parts(test_input, [:sum, :mul])
-# AOC.Elixir07.parts(test_input, [:sum, :mul, :con])
+# AOC.Elixir07.parts(check, [:sum, :mul])
+# AOC.Elixir07.parts(check, [:sum, :mul, :con])
 #
 # # AOC.Elixir07.do_operation([81, 40, 28], :sum)
 # #

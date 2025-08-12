@@ -35,7 +35,7 @@ defmodule AOC.Elixir01 do
   end
 end
 
-# Solution
-{l, r} = AOC.Elixir01.parse_input()
-AOC.Elixir01.part1(l, r)
-AOC.Elixir01.part2(l, r)
+# # Solution
+# {l, r} = AOC.Elixir01.parse_input()
+# AOC.Elixir01.part1(l, r)
+# AOC.Elixir01.part2(l, r)

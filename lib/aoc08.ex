@@ -1,15 +1,13 @@
 defmodule AOC.Elixir08 do
-  @input_path "inputs/input08.txt"
-  @size 50
-
-  def parse_input do
-    File.read!(@input_path)
+  def parse_input(raw) do
+    raw
     |> String.split("\n", trim: true)
     |> Enum.map(&String.to_charlist/1)
   end
 
   def get_antennas(input) do
-    positions = for row <- 0..(@size - 1), col <- 0..(@size - 1), do: {row, col}
+    size = length(input)
+    positions = for row <- 0..(size - 1), col <- 0..(size - 1), do: {row, col}
 
     positions
     |> Enum.reduce(%{}, fn {row, col}, acc ->
@@ -42,16 +40,16 @@ defmodule AOC.Elixir08 do
     end
   end
 
-  def in_bounds?({row, col}) do
-    row >= 0 and row < @size and col >= 0 and col < @size
+  def in_bounds?({row, col}, size) do
+    row >= 0 and row < size and col >= 0 and col < size
   end
 
-  def part1(antenas) do
+  def part1(antenas, size) do
     Map.values(antenas)
     |> Enum.map(&find_antinodes/1)
     |> List.flatten()
     |> Enum.uniq()
-    |> Enum.filter(&in_bounds?/1)
+    |> Enum.filter(&in_bounds?(&1, size))
     |> Enum.count()
   end
 
@@ -59,47 +57,47 @@ defmodule AOC.Elixir08 do
     {r1 + r0 - r2, c1 + c0 - c2}
   end
 
-  def find_resonant_pairs({r1, c1}, {r2, c2}) do
+  def find_resonant_pairs({r1, c1}, {r2, c2}, size) do
     res1 =
       Stream.iterate({r1, c1}, &next_resonance({r1, c1}, &1, {r2, c2}))
-      |> Enum.take_while(&in_bounds?/1)
+      |> Enum.take_while(&in_bounds?(&1, size))
 
     res2 =
       Stream.iterate({r2, c2}, &next_resonance({r2, c2}, &1, {r1, c1}))
-      |> Enum.take_while(&in_bounds?/1)
+      |> Enum.take_while(&in_bounds?(&1, size))
 
     Enum.concat(res1, res2)
   end
 
-  def find_resonant_antinodes([first | rest]) do
+  def find_resonant_antinodes([first | rest], size) do
     if length(rest) == 0 do
       []
     else
       rest
-      |> Enum.map(&find_resonant_pairs(first, &1))
+      |> Enum.map(&find_resonant_pairs(first, &1, size))
       |> List.flatten()
-      |> Enum.concat(find_resonant_antinodes(rest))
+      |> Enum.concat(find_resonant_antinodes(rest, size))
       |> Enum.uniq()
     end
   end
 
-  def part2(antenas) do
+  def part2(antenas, size) do
     Map.values(antenas)
-    |> Enum.map(&find_resonant_antinodes/1)
+    |> Enum.map(&find_resonant_antinodes(&1, size))
     |> List.flatten()
     |> Enum.uniq()
-    |> Enum.filter(&in_bounds?/1)
+    |> Enum.filter(&in_bounds?(&1, size))
     |> Enum.count()
   end
 end
 
-# Solutions
-input = AOC.Elixir08.parse_input()
-ant = AOC.Elixir08.get_antennas(input)
-
-AOC.Elixir08.part1(ant)
-
-AOC.Elixir08.part2(ant)
+# # Solutions
+# input = File.read!("inputs/input08.txt") |> AOC.Elixir08.parse_input()
+# ant = AOC.Elixir08.get_antennas(input)
+#
+# AOC.Elixir08.part1(ant, length(input))
+#
+# AOC.Elixir08.part2(ant, length(input))
 
 # # Testing
 # length(Enum.at(input, 0))

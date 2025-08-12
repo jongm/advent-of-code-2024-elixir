@@ -1,15 +1,12 @@
 defmodule AOC.Elixir06 do
-  @input_path "inputs/input06.txt"
-  @size 130
-
-  def parse_input do
-    File.read!(@input_path)
+  def parse_input(raw) do
+    raw
     |> String.split("\n", trim: true)
     |> Enum.map(&String.to_charlist/1)
   end
 
-  def get_locations do
-    for row <- 0..(@size - 1), col <- 0..(@size - 1), into: %MapSet{}, do: [row, col]
+  def get_locations(size) do
+    for row <- 0..(size - 1), col <- 0..(size - 1), into: %MapSet{}, do: [row, col]
   end
 
   def find_start(locations, input) do
@@ -95,8 +92,8 @@ end
 # # Solutions
 # IEx.configure(inspect: [charlists: :as_lists])
 #
-# input = AOC.Elixir06.parse_input()
-# locations = AOC.Elixir06.get_locations()
+# input = File.read!("inputs/input06.txt") |> AOC.Elixir06.parse_input()
+# locations = AOC.Elixir06.get_locations(length(input))
 # start = AOC.Elixir06.find_start(locations, input)
 # crates = AOC.Elixir06.find_crates(locations, input)
 # visited = AOC.Elixir06.get_visited_path(locations, crates, start)
@@ -104,7 +101,7 @@ end
 # AOC.Elixir06.part1(visited)
 #
 # AOC.Elixir06.part2(locations, crates, visited, start)
-
+#
 # Testing
 # IO.inspect(start, charlists: :as_list)
 #
